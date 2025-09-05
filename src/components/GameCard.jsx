@@ -178,7 +178,7 @@ const GameCard = () => {
         <h1 className="mb-5 text-black dark:text-white font-bold text-xl">
           Time: {time}
         </h1>
-        <div className="dark:bg-[#23253a] bg-white w-[600px] border-gray-300 rounded-sm p-2 shadow-xl flex flex-col justify-center max-w-md">
+        <div className="dark:bg-[#23253a] bg-blue-500 w-[600px] border-gray-300 rounded-sm p-2 shadow-xl flex flex-col justify-center max-w-sm lg:max-w-lg">
           {isWinner ? (
             <figure className="flex justify-center items-center w-full mx-auto">
               <img
@@ -221,7 +221,7 @@ const GameCard = () => {
               onClick={handleStart}
               title={"Start"}
               className={
-                "cursor-pointer bg-blue-500 text-white px-5 py-2 rounded w-fit mx-auto mt-5 mb-4"
+                "cursor-pointer bg-red-500 hover:bg-red-800 transition-all ease-in-out duration-300 text-white px-5 py-2 rounded w-fit mx-auto mt-5 mb-4"
               }
             />
           ) : (
