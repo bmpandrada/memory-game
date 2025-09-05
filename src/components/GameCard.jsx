@@ -178,7 +178,7 @@ const GameCard = () => {
         <h1 className="mb-5 text-black dark:text-white font-bold text-xl">
           Time: {time}
         </h1>
-        <div className="dark:bg-[#23253a] bg-white w-[600px] border-gray-300 rounded-sm p-2 shadow-xl flex flex-col justify-center">
+        <div className="dark:bg-[#23253a] bg-white w-[600px] border-gray-300 rounded-sm p-2 shadow-xl flex flex-col justify-center max-w-md">
           {isWinner ? (
             <figure className="flex justify-center items-center w-full mx-auto">
               <img
@@ -188,7 +188,7 @@ const GameCard = () => {
               />
             </figure>
           ) : (
-            <div className="grid grid-cols-4 gap-4 p-4">
+            <div className="grid grid-cols-4 gap-4 p-4 relative">
               {cards.map((card) => (
                 <Cards
                   key={card.id}
@@ -199,9 +199,23 @@ const GameCard = () => {
                   isDark={isDark}
                 />
               ))}
+              
             </div>
           )}
+        {!dataPlayer.length > 0 && (
+                    <form onSubmit={handleSubmit} className="w-full flex flex-col gap-2 px-5">
+                        <div>
+                                                    <label htmlFor="name" className="text-black dark:text-white inline-block">Player Name:</label>
+                        <input type="text" name="name" value={player.name} onChange={handleChange} className="max-w-md border-b dark:border-white ml-2"/>
 
+                        </div>
+                        <Button type={'submit'} 
+                            title={'Enter'}
+                        className={
+                            "cursor-pointer bg-green-500 text-white py-1 px-5 rounded w-fit mx-auto ml-2"
+                        }/>
+                    </form>
+                )}
           {!start ? (
             <Button
               onClick={handleStart}
@@ -220,18 +234,9 @@ const GameCard = () => {
             />
           )}
         </div>
+         
       </div>
-          {!dataPlayer.length > 0 && (
-            <form onSubmit={handleSubmit} className="fixed top-0 left-0 ml-2 mt-2 ">
-            <label htmlFor="name" className="text-black dark:text-white ">Player Name:</label>
-            <input type="text" name="name" value={player.name} onChange={handleChange} className="max-w-md border-b dark:border-white ml-2"/>
-            <Button type={'submit'} 
-                title={'Enter'}
-            className={
-                "cursor-pointer bg-green-500 text-white py-1 px-5 rounded w-fit mx-auto ml-2"
-              }/>
-         </form>
-          )}
+        
     </>
   );
 };
