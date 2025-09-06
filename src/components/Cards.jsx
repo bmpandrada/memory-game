@@ -1,9 +1,7 @@
-const Cards = ({card, handleMouseEnter, handleMouseLeave, handleFlip, isDark}) => {
+const Cards = ({card, handleMouseEnter, handleMouseLeave, handleFlip, isDark, ContainerCardclassName}) => {
     return ( 
          <div
-                className={`flip-card cursor-pointer flip-card-inner shadow-xl ${
-                  card.isFlipped ? "flipped" : ""
-                }`}
+                className={ContainerCardclassName}
                 onMouseEnter={() => handleMouseEnter(card.id)}
                 onMouseLeave={() => handleMouseLeave(card.id)}
                 onClick={() => handleFlip(card.id)}

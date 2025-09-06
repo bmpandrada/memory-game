@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import Cards from "./Cards";
 import Button from "./Button";
 import DarkMode from "./Toggle";
+import Form from "./Form";
+import { generateShuffledCards } from "../utils/generateShuffle";
 
 const GameCard = () => {
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem("darkMode");
-    return saved ? JSON.parse(saved) : true;
-  });
+    return saved ? JSON.parse(saved) : true; });
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDark));
@@ -37,9 +38,7 @@ const GameCard = () => {
   const [start, setStart] = useState(saved.start ?? false);
   const [isWinner, setWinner] = useState(saved.isWinner ?? false);
   const [flippedCards, setFlippedCards] = useState(saved.flippedCards ?? []);
-  const [player, setPlayer] = useState({
-        name:'',
-  })
+  const [player, setPlayer] = useState({name:'',})
 
   const [dataPlayer, setDataPlayer] = useState([])
 
@@ -63,7 +62,7 @@ const GameCard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!player.name || dataPlayer.length === 1) return
+    if(!player.name || dataPlayer.length === 1) return;
     const newPlayer = {id: Date.now(), ...player};
     setDataPlayer([newPlayer, ...dataPlayer]);
     setPlayer({
@@ -90,13 +89,18 @@ const GameCard = () => {
     }
   }, [cards]);
 
-  const handleMouseEnter = (id) => {
-    setCards((prev) =>
-      prev.map((card) =>
-        card.id === id && !card.isMatched ? { ...card, isHovered: true } : card
-      )
-    );
-  };
+const handleMouseEnter = (id) => {
+  // exit kung wala pang player na na-submit
+  if (dataPlayer.length === 0) return; 
+
+  setCards((prev) =>
+    prev.map((card) =>
+      card.id === id && !card.isMatched ? { ...card, isHovered: true } : card
+    )
+  );
+};
+
+
 
   const handleMouseLeave = (id) => {
     setCards((prev) =>
@@ -106,32 +110,32 @@ const GameCard = () => {
     );
   };
 
-  const handleStart = () => setStart(true);
+const handleStart = () => {
+  if (dataPlayer.length === 0) {
+    alert("Please enter your name before starting!");
+    return;
+  }
+  const shuffle = generateShuffledCards(initialCards);
+  setCards(shuffle);
+  setStart(true);
+};
 
-  const handleReset = () => {
-    localStorage.removeItem("memoryGame");
-    setFlippedCards([]);
-    setWinner(false);
-    setStart(false);
-    setTime(0);
-    setDataPlayer([])
 
-    const duplicated = [...initialCards, ...initialCards];
-    const shuffle = duplicated
-      .map((card, index) => ({
-        id: index + 1,
-        value: card.value,
-        isFlipped: false,
-        isMatched: false,
-        isHovered: false,
-      }))
-      .sort(() => Math.random() - 0.5);
-    setCards(shuffle);
-  };
+const handleReset = () => {
+  localStorage.removeItem("memoryGame");
+  setFlippedCards([]);
+  setWinner(false);
+  setStart(false);
+  setTime(0);
+  setDataPlayer([]);
+  const shuffle = generateShuffledCards(initialCards);
+  setCards(shuffle);
+};
+
 
   const handleFlip = (id) => {
     const clickedCard = cards.find((c) => c.id === id);
-    if (!clickedCard || clickedCard.isFlipped || clickedCard.isMatched) return;
+    if (dataPlayer.length === 0 || !clickedCard || clickedCard.isFlipped || clickedCard.isMatched) return;
 
     const newCards = cards.map((card) =>
       card.id === id ? { ...card, isFlipped: true } : card
@@ -166,10 +170,12 @@ const GameCard = () => {
     }
   };
   const toggleDarkMode = () => {
-    const newTheme = isDark === "light" ? "dark" : "light";
-    setIsDark(newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  };
+  setIsDark(prev => {
+    const newTheme = !prev;
+    document.documentElement.classList.toggle("dark", newTheme);
+    return newTheme;
+  });
+};
 
   return (
     <>
@@ -188,9 +194,11 @@ const GameCard = () => {
               />
             </figure>
           ) : (
-            <div className="grid grid-cols-4 gap-4 p-4 relative">
+            <div className="grid grid-cols-4 gap-4 p-4 relative ">
               {cards.map((card) => (
                 <Cards
+                  ContainerCardclassName={`flip-card cursor-pointer flip-card-inner shadow-2xl ${
+                  start && card.isFlipped ? "flipped" : ""}`}
                   key={card.id}
                   card={card}
                   handleMouseEnter={handleMouseEnter}
@@ -199,22 +207,19 @@ const GameCard = () => {
                   isDark={isDark}
                 />
               ))}
-              
             </div>
           )}
         {!dataPlayer.length > 0 && (
-                    <form onSubmit={handleSubmit} className="w-full flex flex-col gap-2 px-5">
-                        <div>
-                                                    <label htmlFor="name" className="text-black dark:text-white inline-block">Player Name:</label>
-                        <input type="text" name="name" value={player.name} onChange={handleChange} className="max-w-md border-b dark:border-white ml-2"/>
-
-                        </div>
-                        <Button type={'submit'} 
-                            title={'Enter'}
-                        className={
-                            "cursor-pointer bg-green-500 text-white py-1 px-5 rounded w-fit mx-auto ml-2"
-                        }/>
-                    </form>
+                    <Form 
+                        onSubmit={handleSubmit} 
+                        className={"w-full flex flex-col gap-2 px-5"}
+                        value={player.name}
+                        name={'name'} 
+                        onChange={handleChange} 
+                        title={"Player Name:"} 
+                        btnClassname={"cursor-pointer bg-green-500 text-white py-1 px-5 rounded w-fit mx-auto ml-2"} 
+                        labelClassName={"text-black dark:text-white text-white inline-block"} 
+                        inputClassName={"max-w-md border-b border-white dark:border-b dark:border-white ml-2"}/>
                 )}
           {!start ? (
             <Button
@@ -234,9 +239,7 @@ const GameCard = () => {
             />
           )}
         </div>
-         
       </div>
-        
     </>
   );
 };
