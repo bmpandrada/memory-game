@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: all 0.3s ease-in;
+  background-color: white;
+
+  &.dark {
+    background-color: #1f2937; 
+  }
+
+  .time {
+    margin-bottom: 5rem;
+    color: #1f2937;
+    font-weight: bold;
+
+    &.dark {
+        color: #fff;
+    }
+  }
+
+  .game-wrapper {
+    background-color: #3b82f6; 
+    max-width: 32rem;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.125rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                0 4px 6px -4px rgba(0,0,0,0.1);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &.dark {
+      background-color: #23253a;
+    }
+  }
+
+}

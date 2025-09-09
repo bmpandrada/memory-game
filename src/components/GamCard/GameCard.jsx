@@ -1,9 +1,11 @@
+import styles from "./GameCard.module.scss";
 import { useState, useEffect } from "react";
-import Cards from "./Cards";
-import Button from "./Button";
-import DarkMode from "./Toggle";
-import Form from "./Form";
-import { generateShuffledCards } from "../utils/generateShuffle";
+import Cards from "../Cards";
+import Button from "../Button";
+import DarkMode from "../Toggle";
+import Form from "../Form";
+import { generateShuffledCards } from "../../utils/generateShuffle";
+import Time from "../Time/Time";
 
 const GameCard = () => {
   const [isDark, setIsDark] = useState(() => {
@@ -169,22 +171,17 @@ const handleReset = () => {
       setFlippedCards([]);
     }
   };
-  const toggleDarkMode = () => {
-  setIsDark(prev => {
-    const newTheme = !prev;
-    document.documentElement.classList.toggle("dark", newTheme);
-    return newTheme;
-  });
+ const toggleDarkMode = () => {
+  setIsDark((prev) => !prev);
 };
+
 
   return (
     <>
-      <div className="dark:bg-gray-800 flex flex-col justify-center items-center w-screen h-screen bg-white relative transition-all ease-in">
+      <div className={`${styles.container} ${isDark ? styles.dark : ""}`}>
          <DarkMode toggleDarkMode={toggleDarkMode} isDark={isDark} dataPlayer={dataPlayer} />
-        <h1 className="mb-5 text-black dark:text-white font-bold text-xl">
-          Time: {time}
-        </h1>
-        <div className="dark:bg-[#23253a] bg-blue-500 w-[600px] border-gray-300 rounded-sm p-2 shadow-xl flex flex-col justify-center max-w-sm lg:max-w-lg">
+         <Time time={time} styles={styles} isDark={isDark}/>
+        <div className={`${styles["game-wrapper"]} ${isDark ? styles.dark : ""}`}>
           {isWinner ? (
             <figure className="flex justify-center items-center w-full mx-auto">
               <img
