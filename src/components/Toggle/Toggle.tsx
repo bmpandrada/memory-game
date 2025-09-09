@@ -19,7 +19,7 @@ const DarkMode = ({toggleDarkMode, isDark, dataPlayer}:ToogleProps) => {
           </div>
           <Button
             onClick={toggleDarkMode}
-            title={isDark === "dark" ? "🌑" : "☀️"}
+            title={isDark ? "🌑" : "☀️"}
             className={
               "shadow-lg duration-300 p-2 text-sm hover:bg-blue-800 rounded-full bg-blue-500 dark:bg-black  dark:hover:bg-gray-500 text-white dark:text-white h-auto cursor-pointer transition-all ease-in"
             }
