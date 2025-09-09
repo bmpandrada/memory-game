@@ -2,7 +2,7 @@ import styles from "./GameCard.module.scss";
 import { useState, useEffect } from "react";
 import Cards from "../Cards";
 import Button from "../Button";
-import DarkMode from "../Toggle";
+import DarkMode from "../Toggle/Toggle";
 import Form from "../Form";
 import { generateShuffledCards } from "../../utils/generateShuffle";
 import Time from "../Time/Time";

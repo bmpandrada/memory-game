@@ -1,0 +1,10 @@
+.welcome {
+    text-transform: capitalize;
+    font-size: small;
+    color:red;
+
+    &.dark {
+
+        color: #fff;
+    }
+}

@@ -1,6 +1,21 @@
+import React from "react";
 import Button from "./Button";
 
-const Form = ({onSubmit, value, name, onChange, title, className, btnClassname, labelClassName, inputClassName}) => {
+type FormProps = {
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    value: string;
+    name: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+    title: string;
+    className?: string; 
+    btnClassname?: string;
+    labelClassName?: string; 
+    inputClassName?: string;
+}
+
+
+
+const Form = ({onSubmit, value, name, onChange, title, className, btnClassname, labelClassName, inputClassName}: FormProps) => {
     return ( 
          <form onSubmit={onSubmit} className={className}>
                         <div>
