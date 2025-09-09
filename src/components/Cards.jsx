@@ -1,5 +1,7 @@
+import { useGlitch } from 'react-powerglitch'
 const Cards = ({card, handleMouseEnter, handleMouseLeave, handleFlip, isDark, ContainerCardclassName}) => {
-    return ( 
+  const glitch = useGlitch();  
+  return ( 
          <div
                 className={ContainerCardclassName}
                 onMouseEnter={() => handleMouseEnter(card.id)}
@@ -11,7 +13,7 @@ const Cards = ({card, handleMouseEnter, handleMouseLeave, handleFlip, isDark, Co
                    {isDark === 'dark' ? '❔' :  '❓'}
                 </div>
                 {/* Back */}
-                <div className="bg-[#2b2e41] aspect-square flex items-center justify-center rounded text-2xl">
+                <div ref={card.isMatched ?  glitch.ref :  null} className="bg-[#2b2e41] aspect-square flex items-center justify-center rounded text-2xl">
                   {card.isFlipped || card.isHovered || card.isMatched ? (
                     <img src={card.value} alt="card" />
                   ) : (
