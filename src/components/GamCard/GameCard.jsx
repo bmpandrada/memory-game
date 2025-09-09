@@ -1,6 +1,8 @@
 import styles from "./GameCard.module.scss";
+import "/src/styles/main.scss";
+
 import { useState, useEffect } from "react";
-import Cards from "../Cards";
+import Cards from "../Cards/Cards";
 import Button from "../Button";
 import DarkMode from "../Toggle/Toggle";
 import Form from "../Form";
@@ -40,9 +42,8 @@ const GameCard = () => {
   const [start, setStart] = useState(saved.start ?? false);
   const [isWinner, setWinner] = useState(saved.isWinner ?? false);
   const [flippedCards, setFlippedCards] = useState(saved.flippedCards ?? []);
-  const [player, setPlayer] = useState({name:'',})
-
-  const [dataPlayer, setDataPlayer] = useState([])
+  const [player, setPlayer] = useState({name:'',});
+  const [dataPlayer, setDataPlayer] = useState([]);
 
   useEffect(()=> {
     const dateSave = JSON.parse(localStorage.getItem('player-name') || '[]');
@@ -194,8 +195,8 @@ const handleReset = () => {
             <div className="grid grid-cols-4 gap-4 p-4 relative ">
               {cards.map((card) => (
                 <Cards
-                  ContainerCardclassName={`flip-card cursor-pointer flip-card-inner shadow-2xl ${
-                  start && card.isFlipped ? "flipped" : ""}`}
+                  ContainerCardclassName={`${styles["flip-card"]} cursor-point ${styles["flip-card-inner"]} shadow-2 ${
+                  start && card.isFlipped ? styles["flipped"] : ""}`}
                   key={card.id}
                   card={card}
                   handleMouseEnter={handleMouseEnter}
@@ -214,7 +215,7 @@ const handleReset = () => {
                         name={'name'} 
                         onChange={handleChange} 
                         title={"Player Name:"} 
-                        btnClassname={"cursor-pointer bg-green-500 text-white py-1 px-5 rounded w-fit mx-auto ml-2"} 
+                        btnClassname={"cursor-point bg-green-500 text-white py-1 px-5 rounded w-fit mx-auto ml-2"} 
                         labelClassName={"text-black dark:text-white text-white inline-block"} 
                         inputClassName={"max-w-md border-b border-white dark:border-b dark:border-white ml-2"}/>
                 )}
@@ -223,7 +224,7 @@ const handleReset = () => {
               onClick={handleStart}
               title={"Start"}
               className={
-                "cursor-pointer bg-red-500 hover:bg-red-800 transition-all ease-in-out duration-300 text-white px-5 py-2 rounded w-fit mx-auto mt-5 mb-4"
+                "cursor-point bg-red-500 hover:bg-red-800 transition-all ease-in-out duration-300 text-white px-5 py-2 rounded w-fit mx-auto mt-5 mb-4"
               }
             />
           ) : (
@@ -231,7 +232,7 @@ const handleReset = () => {
               onClick={handleReset}
               title={"Reset"}
               className={
-                "cursor-pointer bg-yellow-500 text-white px-5 py-2 rounded w-fit mx-auto mt-5 mb-4"
+                "cursor-point bg-yellow-500 text-white px-5 py-2 rounded w-fit mx-auto mt-5 mb-4"
               }
             />
           )}
