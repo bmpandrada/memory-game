@@ -5,3 +5,27 @@
 .cursor-point {
   cursor: pointer;
 }
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.direction-row {
+  flex-direction: row;
+}
+
+.direction-col {
+  flex-direction: column;
+}
+
+.w-100 {
+  width: 100%;
+}

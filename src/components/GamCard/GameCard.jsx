@@ -4,20 +4,14 @@ import "/src/styles/main.scss";
 import { useState, useEffect } from "react";
 import Cards from "../Cards/Cards";
 import Button from "../Button";
-import DarkMode from "../Toggle/Toggle";
 import Form from "../Form";
 import { generateShuffledCards } from "../../utils/generateShuffle";
 import Time from "../Time/Time";
+import useValidatePlayer from "../../utils/useValidatePlayer";
 
-const GameCard = () => {
-  const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem("darkMode");
-    return saved ? JSON.parse(saved) : true; });
-
-  useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(isDark));
-  }, [isDark]);
-
+const GameCard = ({dataPlayer, isDark, setDataPlayer }) => {
+  
+  const { validate } = useValidatePlayer(dataPlayer)
   const iconsObject = JSON.parse(import.meta.env.VITE_API_ICONS);
   const initialCards = iconsObject.map((value) => ({ value }));
   const saved = JSON.parse(localStorage.getItem("memoryGame") || "{}");
@@ -43,14 +37,14 @@ const GameCard = () => {
   const [isWinner, setWinner] = useState(saved.isWinner ?? false);
   const [flippedCards, setFlippedCards] = useState(saved.flippedCards ?? []);
   const [player, setPlayer] = useState({name:'',});
-  const [dataPlayer, setDataPlayer] = useState([]);
+
 
   useEffect(()=> {
     const dateSave = JSON.parse(localStorage.getItem('player-name') || '[]');
     if(dateSave.length > 0) {
         setDataPlayer(dateSave)
     }
-  },[])
+  },[setDataPlayer])
 
   useEffect(()=> {
     localStorage.setItem('player-name', JSON.stringify(dataPlayer))
@@ -114,10 +108,7 @@ const handleMouseEnter = (id) => {
   };
 
 const handleStart = () => {
-  if (dataPlayer.length === 0) {
-    alert("Please enter your name before starting!");
-    return;
-  }
+  if(!validate()) return
   const shuffle = generateShuffledCards(initialCards);
   setCards(shuffle);
   setStart(true);
@@ -137,6 +128,7 @@ const handleReset = () => {
 
 
   const handleFlip = (id) => {
+     if(!validate()) return
     const clickedCard = cards.find((c) => c.id === id);
     if (dataPlayer.length === 0 || !clickedCard || clickedCard.isFlipped || clickedCard.isMatched) return;
 
@@ -172,15 +164,12 @@ const handleReset = () => {
       setFlippedCards([]);
     }
   };
- const toggleDarkMode = () => {
-  setIsDark((prev) => !prev);
-};
+
 
 
   return (
     <>
       <div className={`${styles.container} ${isDark ? styles.dark : ""}`}>
-         <DarkMode toggleDarkMode={toggleDarkMode} isDark={isDark} dataPlayer={dataPlayer} />
          <Time time={time} styles={styles} isDark={isDark}/>
         <div className={`${styles["game-wrapper"]} ${isDark ? styles.dark : ""}`}>
           {isWinner ? (

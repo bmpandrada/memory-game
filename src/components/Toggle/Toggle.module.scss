@@ -8,3 +8,35 @@
         color: #fff;
     }
 }
+
+.container {
+    background-color: #fff;
+     transition: all 0.3s ease-in;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem;
+    &.dark {
+        background-color: #1f2937;
+        color: #000;
+    }
+}
+.btn {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.274);
+    background-color: #000;
+    padding: .2rem;
+    border-radius: .87em;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+
+    &.dark {
+        background-color: #fff;
+        color: #000;
+    }
+}
+
+
+
+// shadow-lg duration-300 p-2 text-sm hover:bg-blue-800 rounded-full bg-blue-500 dark:bg-black  dark:hover:bg-gray-500 text-white dark:text-white h-auto cursor-pointer transition-all ease-in
