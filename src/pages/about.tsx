@@ -28,7 +28,7 @@ const AboutPage = ({isDark}) => {
   className={`${isDark ? 'bg-[#1f2937] text-white' : ''} 
     transition-all ease-in duration-300 
     container flex flex-col justify-start items-center 
-    w-full min-h-screen p-5 overflow-auto`}
+    max-w-full min-h-screen p-5 overflow-auto`}
 >
   <div className="p-2 max-w-lg mx-auto">
     <ReactMarkdown>{markdown}</ReactMarkdown>
