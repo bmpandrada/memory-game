@@ -10,7 +10,7 @@ const Header = () => {
       <Link
         onClick={() => setActive("game")}
         className={`${style.link} ${active === "game" ? style.active : ""}`}
-        to={'/game'}
+        to={'/'}
       >
         Game
       </Link>

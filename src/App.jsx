@@ -24,7 +24,7 @@ const App = () => {
       <Header />
          <DarkMode toggleDarkMode={toggleDarkMode} isDark={isDark} dataPlayer={dataPlayer} />
         <Routes>
-        <Route path="/game" element={<GamePage dataPlayer={dataPlayer} toggleDarkMode={toggleDarkMode} isDark={isDark} setIsDark={setIsDark} setDataPlayer={setDataPlayer}/>} />
+        <Route path="/" element={<GamePage dataPlayer={dataPlayer} toggleDarkMode={toggleDarkMode} isDark={isDark} setIsDark={setIsDark} setDataPlayer={setDataPlayer}/>} />
         <Route path="/about" element={<AboutPage isDark={isDark} />} />
       </Routes>
     </>
