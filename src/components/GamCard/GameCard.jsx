@@ -44,7 +44,7 @@ const GameCard = ({dataPlayer, isDark, setDataPlayer }) => {
     if(dateSave.length > 0) {
         setDataPlayer(dateSave)
     }
-  },[setDataPlayer])
+  },[])
 
   useEffect(()=> {
     localStorage.setItem('player-name', JSON.stringify(dataPlayer))

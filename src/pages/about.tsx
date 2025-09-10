@@ -24,9 +24,16 @@ In addition to our memory games, we also offer a range of other brain training g
 
 const AboutPage = ({isDark}) => {
    return (
-    <div className={`${isDark ? 'bg-[#1f2937] text-white' : ''} transition-all ease-in duration-[.3s] container flex justify-center align-items-center direction-col max-w-full h-screen p-5`}>
-        <p className="p-2 w-lg mx-auto "><ReactMarkdown >{markdown}</ReactMarkdown></p>
-    </div>
+    <div
+  className={`${isDark ? 'bg-[#1f2937] text-white' : ''} 
+    transition-all ease-in duration-300 
+    container flex flex-col justify-start items-center 
+    w-full min-h-screen p-5 overflow-auto`}
+>
+  <div className="p-2 max-w-lg mx-auto">
+    <ReactMarkdown>{markdown}</ReactMarkdown>
+  </div>
+</div>
    );
 }
  
